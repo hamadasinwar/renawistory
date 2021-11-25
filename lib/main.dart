@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'login/login.dart';
+import 'services/push_notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,8 +17,27 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    PushNotification.initPlatformState();
+    token();
+  }
+
+  void token()async{
+    var t = await PushNotification.getTokenID();
+    print('TOKEN: $t');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

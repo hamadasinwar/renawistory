@@ -1,9 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:renawistory/services/push_notification.dart';
 import 'package:renawistory/widgets/alert.dart';
 import 'package:renawistory/widgets/roundedInput.dart';
 
@@ -20,15 +20,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
-  late String token;
-  _getToken() {
-    FirebaseMessaging.instance.getToken().then((tokenId) {
-      setState(() {
-        token = tokenId!;
-        print('************');
-        print(token);
-      });
-    });
+  late String? token;
+  _getToken()async {
+    token = await PushNotification.getTokenID();
   }
 
   late String socialStatus;
